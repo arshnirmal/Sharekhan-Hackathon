@@ -1,0 +1,90 @@
+{
+  "project_info": {
+    "project_number": "444590355662",
+    "project_id": "sharekhan-694fc",
+    "storage_bucket": "sharekhan-694fc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444590355662:android:6ff3b11b93027132ec0c9f",
+        "android_client_info": {
+          "package_name": "com.example.beacon"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444590355662-368coknqluh4e4fj7trqgdjmi66l316f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_LAXtdXGDryN9N1x226R0INNwvooOASY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444590355662-368coknqluh4e4fj7trqgdjmi66l316f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "444590355662-nn2g5cp9efpggqm82vojufqnmpg6tqs1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.indoorNav"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444590355662:android:b915bb85c8bd6fa3ec0c9f",
+        "android_client_info": {
+          "package_name": "com.example.indoor_nav"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444590355662-bnlk3f9qo0u8nv2lnprp8qjmvig6qv06.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.indoor_nav",
+            "certificate_hash": "861b2f0a828a9bd3027f464bbc9b22ee7084f482"
+          }
+        },
+        {
+          "client_id": "444590355662-368coknqluh4e4fj7trqgdjmi66l316f.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD_LAXtdXGDryN9N1x226R0INNwvooOASY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444590355662-368coknqluh4e4fj7trqgdjmi66l316f.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "444590355662-nn2g5cp9efpggqm82vojufqnmpg6tqs1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.indoorNav"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

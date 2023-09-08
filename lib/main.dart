@@ -1,11 +1,31 @@
 import 'dart:async';
+import 'package:beacon/auth_screen.dart';
+import 'package:beacon/map.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:permission_handler/permission_handler.dart';
 
 import 'package:beacon_broadcast/beacon_broadcast.dart';
 
-void main() => runApp(const MyApp());
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final User? user = auth.currentUser;
+  
+  runApp(
+    MaterialApp(home: user == null ? SignInPage() : const MapScreen()),
+  );
+}
 
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
@@ -52,63 +72,61 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Beacon Broadcast'),
-        ),
-        body: SingleChildScrollView(
-          child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: <Widget>[
-                Text('Is transmission supported?', style: Theme.of(context).textTheme.headlineSmall),
-                Text('$_isTransmissionSupported', style: Theme.of(context).textTheme.titleMedium),
-                Container(height: 16.0),
-                Text('Has beacon started?', style: Theme.of(context).textTheme.headlineSmall),
-                Text('$_isAdvertising', style: Theme.of(context).textTheme.titleMedium),
-                Container(height: 16.0),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      beaconBroadcast
-                          .setUUID(uuid)
-                          .setMajorId(majorId)
-                          .setMinorId(minorId)
-                          .setTransmissionPower(transmissionPower)
-                          .setAdvertiseMode(advertiseMode)
-                          .setIdentifier(identifier)
-                          .setLayout(layout)
-                          .setManufacturerId(manufacturerId)
-                          .setExtraData(extraData)
-                          .start();
-                    },
-                    child: const Text('START'),
-                  ),
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Beacon Broadcast'),
+      ),
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Text('Is transmission supported?', style: Theme.of(context).textTheme.headlineSmall),
+              Text('$_isTransmissionSupported', style: Theme.of(context).textTheme.titleMedium),
+              Container(height: 16.0),
+              Text('Has beacon started?', style: Theme.of(context).textTheme.headlineSmall),
+              Text('$_isAdvertising', style: Theme.of(context).textTheme.titleMedium),
+              Container(height: 16.0),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    beaconBroadcast
+                        .setUUID(uuid)
+                        .setMajorId(majorId)
+                        .setMinorId(minorId)
+                        .setTransmissionPower(transmissionPower)
+                        .setAdvertiseMode(advertiseMode)
+                        .setIdentifier(identifier)
+                        .setLayout(layout)
+                        .setManufacturerId(manufacturerId)
+                        .setExtraData(extraData)
+                        .start();
+                  },
+                  child: const Text('START'),
                 ),
-                Center(
-                  child: ElevatedButton(
-                    onPressed: () {
-                      beaconBroadcast.stop();
-                    },
-                    child: const Text('STOP'),
-                  ),
+              ),
+              Center(
+                child: ElevatedButton(
+                  onPressed: () {
+                    beaconBroadcast.stop();
+                  },
+                  child: const Text('STOP'),
                 ),
-                Text('Beacon Data', style: Theme.of(context).textTheme.headlineSmall),
-                const Text('UUID: $uuid'),
-                const Text('Major id: $majorId'),
-                const Text('Minor id: $minorId'),
-                const Text('Tx Power: $transmissionPower'),
-                Text('Advertise Mode Value: $advertiseMode'),
-                const Text('Identifier: $identifier'),
-                const Text('Layout: $layout'),
-                const Text('Manufacturer Id: $manufacturerId'),
-                Text('Extra data: $extraData'),
-              ],
-            ),
+              ),
+              Text('Beacon Data', style: Theme.of(context).textTheme.headlineSmall),
+              const Text('UUID: $uuid'),
+              const Text('Major id: $majorId'),
+              const Text('Minor id: $minorId'),
+              const Text('Tx Power: $transmissionPower'),
+              Text('Advertise Mode Value: $advertiseMode'),
+              const Text('Identifier: $identifier'),
+              const Text('Layout: $layout'),
+              const Text('Manufacturer Id: $manufacturerId'),
+              Text('Extra data: $extraData'),
+            ],
           ),
         ),
       ),
