@@ -1,8 +1,9 @@
 import 'dart:async';
 
-import 'package:beacon_broadcast/beacon_broadcast.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+
+import 'package:beacon_broadcast/beacon_broadcast.dart';
 
 void main() => runApp(const MyApp());
 

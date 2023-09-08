@@ -10,7 +10,7 @@ packages:
     source: hosted
     version: "2.11.0"
   beacon_broadcast:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: beacon_broadcast
       sha256: "9aa58bcf83b9184adca8c5ed6a8c5d7286d07b48c8b809fdf5b1432d16574d86"
@@ -132,7 +132,7 @@ packages:
     source: hosted
     version: "1.8.3"
   permission_handler:
-    dependency: "direct dev"
+    dependency: "direct main"
     description:
       name: permission_handler
       sha256: bc56bfe9d3f44c3c612d8d393bd9b174eb796d706759f9b495ac254e4294baa5
