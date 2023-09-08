@@ -1,80 +1,31 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_blue/flutter_blue.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:indoor_nav/auth_screen.dart';
+import 'package:indoor_nav/home_page.dart';
 import 'package:permission_handler/permission_handler.dart';
 
-void main() => runApp(const BeaconScannerApp());
+import 'firebase_options.dart';
 
-class BeaconScannerApp extends StatelessWidget {
-  const BeaconScannerApp({super.key});
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: BeaconScannerScreen(),
-    );
-  }
-}
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
 
-class BeaconScannerScreen extends StatefulWidget {
-  const BeaconScannerScreen({super.key});
+  final FirebaseAuth auth = FirebaseAuth.instance;
+  final User? user = auth.currentUser;
 
-  @override
-  _BeaconScannerScreenState createState() => _BeaconScannerScreenState();
-}
-
-class _BeaconScannerScreenState extends State<BeaconScannerScreen> {
-  FlutterBlue flutterBlue = FlutterBlue.instance;
-  List<BluetoothDevice> devices = [];
-
-  handlePermissions() async {
-    await Permission.location.request();
-    await Permission.bluetooth.request();
-    await Permission.bluetoothAdvertise.request();
-    await Permission.bluetoothConnect.request();
-    await Permission.bluetoothScan.request();
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    handlePermissions();
-    startScan();
-  }
-
-  void startScan() {
-    flutterBlue.scanResults.listen((results) {
-      setState(() {
-        devices = results.map((result) => result.device).toList();
-      });
-    });
-
-    flutterBlue.startScan();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Beacon Scanner'),
-      ),
-      body: ListView.builder(
-        itemCount: devices.length,
-        itemBuilder: (context, index) {
-          print(devices[index].name);
-
-          return ListTile(
-            title: Text(devices[index].name),
-            subtitle: Text(devices[index].id.toString()),
-          );
-        },
-      ),
-    );
-  }
-
-  @override
-  void dispose() {
-    flutterBlue.stopScan();
-    super.dispose();
-  }
+  await dotenv.load(fileName: ".env");
+  await [Permission.location, Permission.storage, Permission.bluetooth, Permission.bluetoothConnect, Permission.bluetoothScan].request().then(
+    (status) {
+      runApp(
+        MaterialApp(
+          home: user == null ? SignInPage() : const HomeScreen(),
+        ),
+      );
+    },
+  );
 }
